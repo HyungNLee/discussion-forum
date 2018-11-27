@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import upArrow from '../assets/up-arrow.png';
+import downArrow from '../assets/down-arrow.png';
 
 function PostPreview(props) {
 
@@ -46,7 +48,7 @@ function PostPreview(props) {
           text-align: center;
         }
         .postVote-styles {
-          margin: 10px auto;
+          margin: 0px auto;
         }
         .postFooter-container {
           position: absolute;
@@ -60,9 +62,20 @@ function PostPreview(props) {
         .postBody-container {
           margin-left: 9%;
         }
+        .arrow-styles {
+          width: 30px;
+          margin: 0 auto;
+        }
+        .postVote-body {
+          margin: 10px auto;
+        }
         `}</style>
       <div className="postVote-container">
-        <p className="postVote-styles">{props.post.upVotes}</p>
+        <div className="postVote-body">
+          <img className="arrow-styles" src={upArrow} />
+          <p className="postVote-styles">{props.post.upVotes}</p>
+          <img className="arrow-styles" src={downArrow} />
+        </div>
       </div>
       <div className="postBody-container">
         <div className="postOwner-container">

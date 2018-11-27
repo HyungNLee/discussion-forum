@@ -9,14 +9,18 @@ function Body(props) {
         
       `}</style>
       <div className="body-styles">
-        <PostList postList={props.postList} />
+        <PostList 
+        postList={props.postList} 
+        onAddNewPost={props.onAddNewPost}
+        />
       </div>
     </div>
   );
 }
 
 Body.propTypes = {
-  postList: PropTypes.array
+  postList: PropTypes.array,
+  onAddNewPost: PropTypes.func
 };
 
 export default Body;

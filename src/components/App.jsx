@@ -30,7 +30,8 @@ class App extends React.Component {
               commentContent: "He is already my cheese friend. He can't be your cheese friend too.",
               commentUpvotes: 500
             }
-          ]
+          ],
+          postId: 0
         },
         {
           postOwner: "IHateMicrosoftSculptErgonomicKeyboard",
@@ -48,11 +49,22 @@ class App extends React.Component {
               commentContent: 'Ryan needs help. Send HELP!',
               commentUpvotes: 500
             },
-          ]
+          ],
+          postId: 1
         },
       ]
-    }
+    },
+    this.handleAddNewPost = this.handleAddNewPost.bind(this);
   }
+
+  handleAddNewPost(newPost) {
+    let newPostList = this.state.masterPostList.slice();
+    newPostList.push(newPost);
+    this.setState({
+      masterPostList: newPostList
+    })
+  }
+
   render() {
     return (
       <div>
@@ -66,7 +78,10 @@ class App extends React.Component {
           <Route exact path='/' component={} />
         </Switch> */}
         <div className="container">
-          <Body postList={this.state.masterPostList} />
+          <Body 
+            postList={this.state.masterPostList}
+            onAddNewPost={this.handleAddNewPost}
+          />
         </div>
       </div>
     );
