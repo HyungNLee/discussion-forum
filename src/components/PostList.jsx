@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import PostPreview from './PostPreview';
+import Moment from 'moment';
 
 function PostList(props) {
 
@@ -17,7 +18,8 @@ function PostList(props) {
         postBody: _postBody.value,
         upVotes: 1,
         comments: [],
-        postId: props.postList.length
+        postId: props.postList.length,
+        timeOpen: new Moment()
       }
     );
     _postOwner = '';
@@ -59,6 +61,9 @@ function PostList(props) {
           <PostPreview
             post={post}
             key={index}
+            index={index}
+            onUpVote={props.onUpVote}
+            onDownVote={props.onDownVote}
           />
         )}
       </div>

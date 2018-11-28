@@ -2,11 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import upArrow from '../assets/up-arrow.png';
 import downArrow from '../assets/down-arrow.png';
+import Moment from 'moment';
 
 function PostPreview(props) {
 
+  function handleUpVote(id){
+    props.onUpVote(id);
+  }
+
+  function handleDownVote(id){
+    props.onDownVote(id);
+  }
+
   function returnPostLength() {
     return props.post.comments.length;
+  }
+
+  function displayTimeOpen(timeOpen) {
+    return timeOpen.from(new Moment(), true);
   }
   return (
     <div className="post-preview-container">
@@ -72,14 +85,14 @@ function PostPreview(props) {
         `}</style>
       <div className="postVote-container">
         <div className="postVote-body">
-          <img className="arrow-styles" src={upArrow} />
+          <button onClick={() => handleUpVote(props.index)}><img className="arrow-styles" src={upArrow} /></button>
           <p className="postVote-styles">{props.post.upVotes}</p>
-          <img className="arrow-styles" src={downArrow} />
+          <button onClick={() => handleDownVote(props.index)}><img className="arrow-styles" src={downArrow} /></button>
         </div>
       </div>
       <div className="postBody-container">
         <div className="postOwner-container">
-          <p className="postOwner-styles">Posted by u/{props.post.postOwner} **ADD MOMENT JS HERE**</p>
+          <p className="postOwner-styles">Posted by u/{props.post.postOwner} {displayTimeOpen(props.post.timeOpen)} ago</p>
         </div>
         <div className="postTitle-container">
           <p className="postTitle-styles">{props.post.title}</p>

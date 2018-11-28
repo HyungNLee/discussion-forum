@@ -12,6 +12,8 @@ function Body(props) {
         <PostList 
         postList={props.postList} 
         onAddNewPost={props.onAddNewPost}
+        onUpVote={props.onUpVote}
+        onDownVote={props.onDownVote}
         />
       </div>
     </div>
@@ -20,7 +22,9 @@ function Body(props) {
 
 Body.propTypes = {
   postList: PropTypes.array,
-  onAddNewPost: PropTypes.func
+  onAddNewPost: PropTypes.func,
+  onUpVote: PropTypes.func,
+  onDownVote: PropTypes.func
 };
 
 export default Body;

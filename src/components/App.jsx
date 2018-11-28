@@ -2,6 +2,7 @@ import React from 'react';
 //import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import Body from './Body';
+import Moment from 'moment';
 
 /*
   import { Link } from 'react-router-dom';
@@ -31,7 +32,8 @@ class App extends React.Component {
               commentUpvotes: 500
             }
           ],
-          postId: 0
+          postId: 0,
+          timeOpen: new Moment()
         },
         {
           postOwner: "IHateMicrosoftSculptErgonomicKeyboard",
@@ -50,11 +52,34 @@ class App extends React.Component {
               commentUpvotes: 500
             },
           ],
-          postId: 1
+          postId: 1,
+          timeOpen: new Moment()
         },
       ]
     },
     this.handleAddNewPost = this.handleAddNewPost.bind(this);
+    this.handleUpVote = this.handleUpVote.bind(this);
+    this.handleDownVote = this.handleDownVote.bind(this);
+  }
+
+  componentDidMount() {
+    this.waitTimeUpdateTimer = setInterval(() =>
+      this.updatePostElapsedWaitTime(),
+      5000
+    );
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.waitTimeUpdateTimer);
+  }
+
+  updatePostElapsedWaitTime() {
+    console.log("check");
+    let newMasterPostList = this.state.masterPostList.slice();
+    newMasterPostList.forEach((post) =>
+      post.formattedWaitTime = (post.timeOpen).fromNow(true)
+    );
+    this.setState({masterPostList: newMasterPostList})
   }
 
   handleAddNewPost(newPost) {
@@ -63,6 +88,18 @@ class App extends React.Component {
     this.setState({
       masterPostList: newPostList
     })
+  }
+
+  handleUpVote(id) {
+    let newUpVotedList = this.state.masterPostList.slice();
+    newUpVotedList[id].upVotes++;
+    this.setState({ masterPostList: newUpVotedList });
+  }
+
+  handleDownVote(id) {
+    let newUpVotedList = this.state.masterPostList.slice();
+    newUpVotedList[id].upVotes--;
+    this.setState({ masterPostList: newUpVotedList });
   }
 
   render() {
@@ -81,6 +118,8 @@ class App extends React.Component {
           <Body 
             postList={this.state.masterPostList}
             onAddNewPost={this.handleAddNewPost}
+            onUpVote={this.handleUpVote}
+            onDownVote={this.handleDownVote}
           />
         </div>
       </div>
